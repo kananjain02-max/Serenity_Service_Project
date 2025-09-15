@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Services - Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2d3e50;
+            --secondary: #e67e22;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .auth-header {
+            background: linear-gradient(to right, var(--primary), var(--dark));
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .auth-body {
+            padding: 30px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+            display: block;
+        }
+        
+        .form-control {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid #e1e5eb;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+            width: 100%;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background-color: #d35400;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:disabled {
+            background-color: #ccc;
+            border-color: #ccc;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+        
+        .password-toggle {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #777;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+        }
+        
+        .otp-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .otp-input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+        
+        .countdown {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .password-requirements {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .requirement i {
+            margin-right: 8px;
+            width: 16px;
+        }
+        
+        .valid {
+            color: #28a745;
+        }
+        
+        .invalid {
+            color: #dc3545;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            padding: 20px 30px 30px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .auth-footer a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .success-icon {
+            text-align: center;
+            font-size: 80px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .success-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container" id="registrationContainer">
+        <div class="auth-header">
+            <div class="logo">Serenity Services</div>
+            <p class="tagline">Create your account</p>
+        </div>
+        
+        <div class="auth-body">
+            <div id="errorMessage" class="alert alert-danger hidden"></div>
+            <div id="successMessage" class="alert alert-success hidden"></div>
+            
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    />
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        placeholder="Enter your email address"
+                        required
+                    />
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input
+                        type="tel"
+                        class="form-control"
+                        id="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    />
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="position-relative">
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            placeholder="Create a password"
+                            required
+                        />
+                        <span class="password-toggle" id="passwordToggle">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    
+                    <div class="password-requirements">
+                        <div class="requirement" id="lengthReq">
+                            <i class="fas fa-check-circle valid hidden"></i>
+                            <i class="fas fa-times-circle invalid"></i>
+                            <span>At least 8 characters</span>
+                        </div>
+                        <div class="requirement" id="uppercaseReq">
+                            <i class="fas fa-check-circle valid hidden"></i>
+                            <i class="fas fa-times-circle invalid"></i>
+                            <span>One uppercase letter</span>
+                        </div>
+                        <div class="requirement" id="lowercaseReq">
+                            <i class="fas fa-check-circle valid hidden"></i>
+                            <i class="fas fa-times-circle invalid"></i>
+                            <span>One lowercase letter</span>
+                        </div>
+                        <div class="requirement" id="numberReq">
+                            <i class="fas fa-check-circle valid hidden"></i>
+                            <i class="fas fa-times-circle invalid"></i>
+                            <span>One number</span>
+                        </div>
+                        <div class="requirement" id="specialReq">
+                            <i class="fas fa-check-circle valid hidden"></i>
+                            <i class="fas fa-times-circle invalid"></i>
+                            <span>One special character</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    />
+                    <div class="text-danger mt-1 hidden" id="passwordMismatch">Passwords do not match</div>
+                </div>
+                
+                <div class="form-check mb-4">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="termsAgree"
+                        required
+                    />
+                    <label class="form-check-label" for="termsAgree">
+                        I agree to Serenity Services' <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a> and <a href="#">Content Policies</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="registerBtn">
+                    Create Account
+                </button>
+            </form>
+            
+            <div id="otpSection" class="hidden">
+                <h4 class="text-center mb-3">Verify Your Email</h4>
+                <p class="text-center mb-4">We've sent a 6-digit code to <strong id="emailDisplay"></strong>. Enter it below to continue.</p>
+                
+                <div class="otp-container">
+                    <input type="text" class="otp-input" id="otp1" maxlength="1" data-id="1" />
+                    <!-- <input type="text" class="otp-input" id="otp2" maxlength="1" data-id="2" />
+                    <input type="text" class="otp-input" id="otp3" maxlength="1" data-id="3" />
+                    <input type="text" class="otp-input" id="otp4" maxlength="1" data-id="4" />
+                    <input type="text" class="otp-input" id="otp5" maxlength="1" data-id="5" />
+                    <input type="text" class="otp-input" id="otp6" maxlength="1" data-id="6" /> -->
+                </div>
+                
+                <div class="text-center mb-4">
+                    <p>
+                        Didn't receive the code? 
+                        <span id="countdownText" class="countdown">Resend in 02:00</span>
+                        <a href="#" class="hidden" id="resendLink">Resend OTP</a>
+                    </p>
+                </div>
+                
+                <button class="btn btn-primary" id="verifyBtn">
+                    Verify OTP
+                </button>
+            </div>
+            
+            <div id="successSection" class="hidden">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="success-message">
+                    <h3>Registration Successful!</h3>
+                    <p>Your account has been created successfully.</p>
+                </div>
+                <button class="btn btn-primary" id="loginBtn">
+                    Continue to Login
+                </button>
+            </div>
+        </div>
+        
+        <div class="auth-footer">
+            Already have an account? <a href="LoginPage1.html">Log in</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const registrationForm = document.getElementById('registrationForm');
+            const otpSection = document.getElementById('otpSection');
+            const successSection = document.getElementById('successSection');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const emailDisplay = document.getElementById('emailDisplay');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const passwordMismatch = document.getElementById('passwordMismatch');
+            const registerBtn = document.getElementById('registerBtn');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const resendLink = document.getElementById('resendLink');
+            const countdownText = document.getElementById('countdownText');
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // OTP variables
+            let generatedOtp = '';
+            let countdown;
+            let countdownTime = 120; // 2 minutes
+            
+            // Password requirements elements
+            const lengthReq = document.getElementById('lengthReq');
+            const uppercaseReq = document.getElementById('uppercaseReq');
+            const lowercaseReq = document.getElementById('lowercaseReq');
+            const numberReq = document.getElementById('numberReq');
+            const specialReq = document.getElementById('specialReq');
+            
+            // Toggle password visibility
+            passwordToggle.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggle.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+            
+            // Validate password in real-time
+            passwordInput.addEventListener('input', validatePassword);
+            confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+            
+            function validatePassword() {
+                const password = passwordInput.value;
+                
+                // Check length
+                toggleRequirement(lengthReq, password.length >= 8);
+                
+                // Check uppercase
+                toggleRequirement(uppercaseReq, /[A-Z]/.test(password));
+                
+                // Check lowercase
+                toggleRequirement(lowercaseReq, /[a-z]/.test(password));
+                
+                // Check number
+                toggleRequirement(numberReq, /\d/.test(password));
+                
+                // Check special character
+                toggleRequirement(specialReq, /[!@#$%^&*(),.?":{}|<>]/.test(password));
+                
+                // Check if passwords match
+                checkPasswordMatch();
+            }
+            
+            function toggleRequirement(element, isValid) {
+                const validIcon = element.querySelector('.fa-check-circle');
+                const invalidIcon = element.querySelector('.fa-times-circle');
+                
+                if (isValid) {
+                    validIcon.classList.remove('hidden');
+                    invalidIcon.classList.add('hidden');
+                    element.classList.add('valid');
+                    element.classList.remove('invalid');
+                } else {
+                    validIcon.classList.add('hidden');
+                    invalidIcon.classList.remove('hidden');
+                    element.classList.remove('valid');
+                    element.classList.add('invalid');
+                }
+            }
+            
+            function checkPasswordMatch() {
+                if (confirmPasswordInput.value && passwordInput.value !== confirmPasswordInput.value) {
+                    passwordMismatch.classList.remove('hidden');
+                    return false;
+                } else {
+                    passwordMismatch.classList.add('hidden');
+                    return true;
+                }
+            }
+            
+            function isPasswordValid() {
+                const password = passwordInput.value;
+                return (
+                    password.length >= 8 &&
+                    /[A-Z]/.test(password) &&
+                    /[a-z]/.test(password) &&
+                    /\d/.test(password) &&
+                    /[!@#$%^&*(),.?":{}|<>]/.test(password)
+                );
+            }
+            
+            // Generate OTP
+            function generateOtp() {
+                generatedOtp = '123456'; // For demo purposes, use a fixed OTP
+                // In a real application, generate a random OTP and send it via email
+                // Example: generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+                console.log('Generated OTP:', generatedOtp);    
+                 // For testing purposes
+                return generatedOtp;
+            }
+            
+            // Start countdown timer
+            function startCountdown() {
+                clearInterval(countdown);
+                countdownTime = 120;
+                
+                countdown = setInterval(function() {
+                    countdownTime--;
+                    
+                    if (countdownTime <= 0) {
+                        clearInterval(countdown);
+                        countdownText.classList.add('hidden');
+                        resendLink.classList.remove('hidden');
+                    } else {
+                        const minutes = Math.floor(countdownTime / 60);
+                        const seconds = countdownTime % 60;
+                        countdownText.textContent = `Resend in ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                }, 1000);
+            }
+            
+            // Handle OTP input
+            const otpInputs = document.querySelectorAll('.otp-input');
+            otpInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const nextId = parseInt(this.getAttribute('data-id')) + 1;
+                    if (this.value && nextId <= 6) {
+                        document.getElementById(`otp${nextId}`).focus();
+                    }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !this.value && parseInt(this.getAttribute('data-id')) > 1) {
+                        const prevId = parseInt(this.getAttribute('data-id')) - 1;
+                        document.getElementById(`otp${prevId}`).focus();
+                    }
+                });
+            });
+            
+            // Form submission
+            registrationForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Reset messages
+                errorMessage.classList.add('hidden');
+                successMessage.classList.add('hidden');
+                
+                // Validate form
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const termsAgreed = document.getElementById('termsAgree').checked;
+                
+                if (!fullName || !email || !phone || !password || !confirmPassword) {
+                    showError('Please fill in all fields');
+                    return;
+                }
+                
+                if (!isPasswordValid()) {
+                    showError('Password does not meet requirements');
+                    return;
+                }
+                
+                if (!checkPasswordMatch()) {
+                    showError('Passwords do not match');
+                    return;
+                }
+                
+                if (!termsAgreed) {
+                    showError('Please agree to the terms and conditions');
+                    return;
+                }
+                
+                // Generate and send OTP
+                generateOtp();
+                emailDisplay.textContent = email;
+                
+                // Show OTP section
+                registrationForm.classList.add('hidden');
+                otpSection.classList.remove('hidden');
+                
+                // Start countdown
+                startCountdown();
+                
+                // Simulate sending OTP (in a real app, this would call an API)
+                successMessage.textContent = 'OTP has been sent to your email address';
+                successMessage.classList.remove('hidden');
+                setTimeout(() => successMessage.classList.add('hidden'), 3000);
+            });
+            
+            // Verify OTP
+            verifyBtn.addEventListener('click', function() {
+                let enteredOtp = '';
+                otpInputs.forEach(input => {
+                    enteredOtp += input.value;
+                });
+                
+                if (enteredOtp.length !== 6) {
+                    showError('Please enter the complete 6-digit OTP');
+                    return;
+                }
+                
+                if (enteredOtp === generatedOtp) {
+                    // OTP verification successful
+                    otpSection.classList.add('hidden');
+                    successSection.classList.remove('hidden');
+                    
+                    // Clear OTP fields
+                    otpInputs.forEach(input => input.value = '');
+                    
+                    // In a real app, you would submit the registration data to your server here
+                    console.log('Registration successful for:', document.getElementById('email').value);
+                } else {
+                    showError('Invalid OTP. Please try again.');
+                }
+            });
+            
+            // Resend OTP
+            resendLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Generate new OTP
+                generateOtp();
+                
+                // Restart countdown
+                startCountdown();
+                
+                // Hide resend link
+                resendLink.classList.add('hidden');
+                countdownText.classList.remove('hidden');
+                
+                // Show success message
+                successMessage.textContent = 'OTP has been resent to your email address';
+                successMessage.classList.remove('hidden');
+                setTimeout(() => successMessage.classList.add('hidden'), 3000);
+            });
+            
+            // Continue to login
+            loginBtn.addEventListener('click', function() {
+                alert('Redirecting to login page...');
+                // In a real app, this would redirect to the login page
+            });
+            
+            // Show error message
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('hidden');
+                
+                // Scroll to error message
+                errorMessage.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>

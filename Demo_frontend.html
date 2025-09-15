@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Services - Home Services On Demand</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2d3e50;
+            --secondary: #e67e22;
+            --accent: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            color: var(--dark);
+            font-weight: 500;
+            margin: 0 10px;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #d35400;
+            border-color: #d35400;
+        }
+        
+        .btn-outline-primary {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .service-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .provider-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        
+        .provider-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 50px 0 30px;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 10px auto;
+        }
+        
+        .testimonial {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .app-section {
+            background-color: var(--primary);
+            color: white;
+            padding: 50px 0;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-links h5 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-icons {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: white;
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .payment-option {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--secondary);
+            background-color: #fff9f2;
+        }
+        
+        .payment-option.selected {
+            border-color: var(--secondary);
+            background-color: #fff9f2;
+            box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.3);
+        }
+        
+        .provider-profile {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin: 30px auto;
+            max-width: 800px;
+        }
+        
+        .provider-profile img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .search-results {
+            margin-top: 20px;
+        }
+        
+        .cart-badge {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .booking-form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Main App Component
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [currentPage, setCurrentPage] = useState('home');
+            const [user, setUser] = useState(null);
+            const [cart, setCart] = useState([]);
+            const [selectedProvider, setSelectedProvider] = useState(null);
+            const [searchQuery, setSearchQuery] = useState('');
+            const [searchResults, setSearchResults] = useState([]);
+            const [showSearchResults, setShowSearchResults] = useState(false);
+            const [selectedService, setSelectedService] = useState(null);
+            const [bookingDetails, setBookingDetails] = useState({
+                date: '',
+                startTime: '',
+                endTime: '',
+                location: ''
+            });
+
+            // Sample data aligned with database schema
+            const serviceCategories = [
+                { category_id: 1, category_name: "Wellness", description: "Health and wellness services" },
+                { category_id: 2, category_name: "Home Maintenance", description: "Home repair and maintenance services" },
+                { category_id: 3, category_name: "Fitness", description: "Fitness and training services" },
+                { category_id: 4, category_name: "Cleaning", description: "Home and office cleaning services" }
+            ];
+
+            const providers = [
+                {
+                    provider_id: 1,
+                    name: "Rajesh Kumar",
+                    email: "rajesh@example.com",
+                    contact: "9876543210",
+                    address: "123 Service Lane, Mumbai",
+                    category_id: 1,
+                    availability: "9:00 AM - 6:00 PM",
+                    rate: 799,
+                    rating: 4.5,
+                    profile_picture: "https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    document: "verified.pdf",
+                    status: "approved",
+                    created_at: "2023-01-15 10:30:00",
+                    bio: "Certified massage therapist with over 8 years of experience. Specialized in deep tissue and relaxation massages.",
+                    specializations: ["Deep Tissue Massage", "Aromatherapy", "Reflexology"],
+                    tags: ["massage", "wellness", "relaxation"]
+                },
+                {
+                    provider_id: 2,
+                    name: "Priya Sharma",
+                    email: "priya@example.com",
+                    contact: "9876543211",
+                    address: "456 Service Road, Delhi",
+                    category_id: 4,
+                    availability: "8:00 AM - 5:00 PM",
+                    rate: 999,
+                    rating: 4.9,
+                    profile_picture: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f0b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    document: "verified.pdf",
+                    status: "approved",
+                    created_at: "2023-02-20 09:15:00",
+                    bio: "Professional home cleaning expert with 5 years of experience. Provides deep cleaning and organization services.",
+                    specializations: ["Deep Cleaning", "Office Cleaning", "Post-Construction Cleaning"],
+                    tags: ["cleaning", "home", "organization"]
+                },
+                {
+                    provider_id: 3,
+                    name: "Arjun Singh",
+                    email: "arjun@example.com",
+                    contact: "9876543212",
+                    address: "789 Service Street, Bangalore",
+                    category_id: 3,
+                    availability: "6:00 AM - 9:00 PM",
+                    rate: 1299,
+                    rating: 4.2,
+                    profile_picture: "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                    document: "verified.pdf",
+                    status: "approved",
+                    created_at: "2023-03-10 14:20:00",
+                    bio: "Certified personal trainer with specialization in weight management and strength training.",
+                    specializations: ["Weight Loss", "Strength Training", "Nutrition Planning"],
+                    tags: ["fitness", "training", "gym"]
+                }
+            ];
+
+            const services = [
+                {
+                    service_id: 1,
+                    category_id: 1,
+                    provider_id: 1,
+                    service_name: "Massage Therapy",
+                    description: "Relaxing massages at home by certified therapists",
+                    price: 799,
+                    duration: "60 mins",
+                    status: "active",
+                    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=750&q=80",
+                    tags: ["massage", "spa", "relaxation", "wellness"]
+                },
+                {
+                    service_id: 2,
+                    category_id: 4,
+                    provider_id: 2,
+                    service_name: "Home Cleaning",
+                    description: "Professional home deep cleaning services",
+                    price: 999,
+                    duration: "3 hours",
+                    status: "active",
+                    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&auto=format&fit=crop&w=750&q=80",
+                    tags: ["cleaning", "home", "deep clean", "housekeeping"]
+                },
+                {
+                    service_id: 3,
+                    category_id: 2,
+                    provider_id: 3,
+                    service_name: "Plumbing Services",
+                    description: "Expert plumbing solutions for your home",
+                    price: 499,
+                    duration: "1 hour",
+                    status: "active",
+                    image: "https://images.unsplash.com/photo-1621600411687-5dcd930b5f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+                    tags: ["plumbing", "repair", "installation", "maintenance"]
+                },
+                {
+                    service_id: 4,
+                    category_id: 3,
+                    provider_id: 3,
+                    service_name: "Fitness Training",
+                    description: "Personal trainers for home workouts",
+                    price: 1299,
+                    duration: "1 hour",
+                    status: "active",
+                    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=750&q=80",
+                    tags: ["fitness", "training", "workout", "gym", "exercise"]
+                }
+            ];
+
+            // Search functionality
+            const handleSearch = (query) => {
+                setSearchQuery(query);
+                if (query.trim() === '') {
+                    setShowSearchResults(false);
+                    return;
+                }
+                
+                const lowerQuery = query.toLowerCase();
+                const serviceResults = services.filter(service => 
+                    service.service_name.toLowerCase().includes(lowerQuery) || 
+                    service.description.toLowerCase().includes(lowerQuery) ||
+                    service.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+                );
+                
+                const providerResults = providers.filter(provider =>
+                    provider.name.toLowerCase().includes(lowerQuery) ||
+                    provider.bio.toLowerCase().includes(lowerQuery) ||
+                    provider.specializations.some(spec => spec.toLowerCase().includes(lowerQuery)) ||
+                    provider.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+                );
+                
+                setSearchResults({
+                    services: serviceResults,
+                    providers: providerResults
+                });
+                setShowSearchResults(true);
+            };
+
+            // Function to handle service selection for booking
+            const selectService = (service) => {
+                if (!user) {
+                    setCurrentPage('login');
+                    return;
+                }
+                setSelectedService(service);
+                setCurrentPage('booking');
+            };
+
+            // Function to handle provider view
+            const viewProvider = (provider) => {
+                setSelectedProvider(provider);
+                setCurrentPage('provider');
+            };
+
+            // Function to handle booking submission
+            const submitBooking = () => {
+                if (!bookingDetails.date || !bookingDetails.startTime || !bookingDetails.location) {
+                    alert('Please fill all required booking details');
+                    return;
+                }
+
+                // Create a booking object
+                const booking = {
+                    service: selectedService,
+                    provider: providers.find(p => p.provider_id === selectedService.provider_id),
+                    date: bookingDetails.date,
+                    startTime: bookingDetails.startTime,
+                    endTime: bookingDetails.endTime,
+                    location: bookingDetails.location,
+                    total: selectedService.price
+                };
+
+                setCart([...cart, booking]);
+                alert(`Booking for ${selectedService.service_name} has been added to your cart!`);
+                setCurrentPage('home');
+                setSelectedService(null);
+                setBookingDetails({
+                    date: '',
+                    startTime: '',
+                    endTime: '',
+                    location: ''
+                });
+            };
+
+            // Function to handle login
+            const handleLogin = (email, password) => {
+                // Simple authentication (in a real app, this would call an API)
+                if (email && password) {
+                    setUser({ email, name: email.split('@')[0] });
+                    setCurrentPage('home');
+                    return true;
+                }
+                return false;
+            };
+
+            // Function to handle logout
+            const handleLogout = () => {
+                setUser(null);
+                setCart([]);
+                setCurrentPage('home');
+            };
+
+            // Function to handle payment
+            const processPayment = () => {
+                // In a real app, this would integrate with a payment gateway
+                alert('Payment processed successfully! Your booking is confirmed.');
+                setCart([]);
+                setCurrentPage('home');
+            };
+
+            // Calculate cart total
+            const cartTotal = cart.reduce((total, item) => total + item.total, 0);
+            const tax = cartTotal * 0.1;
+            const totalAmount = cartTotal + tax;
+
+            return (
+                <div className="page">
+                    {/* Navigation */}
+                    <nav className="navbar navbar-expand-lg sticky-top">
+                        <div className="container">
+                            <a className="navbar-brand" href="#" onClick={() => setCurrentPage('home')}>Serenity Services</a>
+                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+                            <div className="collapse navbar-collapse" id="navbarNav">
+                                <ul className="navbar-nav me-auto">
+                                    <li className="nav-item">
+                                        <a className={`nav-link ${currentPage === 'home' ? 'active' : ''}`} href="#" onClick={() => setCurrentPage('home')}>Home</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="#services">Services</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="#providers">Providers</a>
+                                    </li>
+                                </ul>
+                                <div className="d-flex align-items-center">
+                                    {/* Search Bar */}
+                                    <div className="input-group me-3" style={{width: '300px'}}>
+                                        <input 
+                                            type="text" 
+                                            className="form-control" 
+                                            placeholder="Search services..." 
+                                            value={searchQuery}
+                                            onChange={(e) => handleSearch(e.target.value)}
+                                        />
+                                        <button className="btn btn-outline-secondary" type="button">
+                                            <i className="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                    
+                                    {/* Cart Button */}
+                                    <button 
+                                        className="btn btn-outline-primary me-2 cart-badge" 
+                                        onClick={() => setCurrentPage('cart')}
+                                        disabled={cart.length === 0}
+                                    >
+                                        <i className="fas fa-shopping-cart"></i>
+                                        {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
+                                    </button>
+                                    
+                                    {/* Login/Logout Button */}
+                                    {user ? (
+                                        <div className="dropdown">
+                                            <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                <i className="fas fa-user me-1"></i> {user.name}
+                                            </button>
+                                            <ul className="dropdown-menu">
+                                                <li><a className="dropdown-item" href="#">Profile</a></li>
+                                                <li><a className="dropdown-item" href="#">Bookings</a></li>
+                                                <li><hr className="dropdown-divider"/></li>
+                                                <li><a className="dropdown-item" href="#" onClick={handleLogout}>Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    ) : (
+                                        <button 
+                                            className="btn btn-outline-secondary" 
+                                            onClick={() => setCurrentPage('login')}
+                                        >
+                                            Login
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content */}
+                    <div className="main-content">
+                        {currentPage === 'home' && (
+                            <>
+                                {/* Hero Section */}
+                                <section className="hero-section">
+                                    <div className="container">
+                                        <h1 className="display-4 fw-bold mb-4">Your Home Services Expert</h1>
+                                        <p className="lead mb-4">Book guaranteed services like massage, cleaning, plumbing, fitness training and more</p>
+                                        <div className="row justify-content-center">
+                                            <div className="col-md-8">
+                                                <div className="input-group mb-3">
+                                                    <input 
+                                                        type="text" 
+                                                        className="form-control form-control-lg" 
+                                                        placeholder="Search for services..."
+                                                        value={searchQuery}
+                                                        onChange={(e) => handleSearch(e.target.value)}
+                                                    />
+                                                    <button className="btn btn-primary" type="button">
+                                                        <i className="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* Search Results */}
+                                {showSearchResults && (
+                                    <div className="container search-results">
+                                        <h2 className="section-title">Search Results</h2>
+                                        {searchResults.services.length > 0 && (
+                                            <>
+                                                <h4>Services</h4>
+                                                <div className="row">
+                                                    {searchResults.services.map(service => (
+                                                        <div key={service.service_id} className="col-md-3 mb-4">
+                                                            <div className="card service-card" onClick={() => selectService(service)}>
+                                                                <span className="category-badge">
+                                                                    {serviceCategories.find(c => c.category_id === service.category_id)?.category_name}
+                                                                </span>
+                                                                <img src={service.image} className="card-img-top" alt={service.service_name}/>
+                                                                <div className="card-body">
+                                                                    <h5 className="card-title">{service.service_name}</h5>
+                                                                    <p className="card-text">{service.description}</p>
+                                                                    <div className="d-flex justify-content-between align-items-center">
+                                                                        <span className="fw-bold text-primary">₹{service.price}</span>
+                                                                        <button className="btn btn-sm btn-outline-primary">Book Now</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </>
+                                        )}
+                                        
+                                        {searchResults.providers.length > 0 && (
+                                            <>
+                                                <h4>Service Providers</h4>
+                                                <div className="row">
+                                                    {searchResults.providers.map(provider => (
+                                                        <div key={provider.provider_id} className="col-md-4 mb-4">
+                                                            <div className="provider-card" onClick={() => viewProvider(provider)}>
+                                                                <img src={provider.profile_picture} alt={provider.name}/>
+                                                                <h4>{provider.name}</h4>
+                                                                <p className="text-muted">
+                                                                    {serviceCategories.find(c => c.category_id === provider.category_id)?.category_name}
+                                                                </p>
+                                                                <div className="rating mb-2">
+                                                                    {Array.from({ length: 5 }).map((_, i) => (
+                                                                        <i key={i} className={`fas fa-star ${i < Math.floor(provider.rating) ? 'text-warning' : 'text-muted'}`}></i>
+                                                                    ))}
+                                                                    <span> {provider.rating} (reviews)</span>
+                                                                </div>
+                                                                <p>Specialized in {provider.specializations[0].toLowerCase()}</p>
+                                                                <button className="btn btn-primary">View Profile</button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </>
+                                        )}
+                                        
+                                        {searchResults.services.length === 0 && searchResults.providers.length === 0 && (
+                                            <div className="text-center py-5">
+                                                <i className="fas fa-search fa-3x text-muted mb-3"></i>
+                                                <h4>No results found</h4>
+                                                <p>Try different search terms</p>
+                                            </div>
+                                        )}
+                                        
+                                        <div className="text-center mt-4">
+                                            <button className="btn btn-outline-secondary" onClick={() => setShowSearchResults(false)}>
+                                                Back to All Services
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Services Section (shown when not searching) */}
+                                {!showSearchResults && (
+                                    <>
+                                        <section id="services" className="py-5">
+                                            <div className="container">
+                                                <h2 className="section-title">Our Services</h2>
+                                                <div className="row">
+                                                    {services.map(service => (
+                                                        <div key={service.service_id} className="col-md-3 mb-4">
+                                                            <div className="card service-card" onClick={() => selectService(service)}>
+                                                                <span className="category-badge">
+                                                                    {serviceCategories.find(c => c.category_id === service.category_id)?.category_name}
+                                                                </span>
+                                                                <img src={service.image} className="card-img-top" alt={service.service_name}/>
+                                                                <div className="card-body">
+                                                                    <h5 className="card-title">{service.service_name}</h5>
+                                                                    <p className="card-text">{service.description}</p>
+                                                                    <div className="d-flex justify-content-between align-items-center">
+                                                                        <span className="fw-bold text-primary">₹{service.price}</span>
+                                                                        <button className="btn btn-sm btn-outline-primary">Book Now</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </section>
+
+                                        {/* Providers Section */}
+                                        <section id="providers" className="py-5">
+                                            <div className="container">
+                                                <h2 className="section-title">Our Service Providers</h2>
+                                                <div className="row">
+                                                    {providers.map(provider => (
+                                                        <div key={provider.provider_id} className="col-md-4 mb-4">
+                                                            <div className="provider-card" onClick={() => viewProvider(provider)}>
+                                                                <img src={provider.profile_picture} alt={provider.name}/>
+                                                                <h4>{provider.name}</h4>
+                                                                <p className="text-muted">
+                                                                    {serviceCategories.find(c => c.category_id === provider.category_id)?.category_name}
+                                                                </p>
+                                                                <div className="rating mb-2">
+                                                                    {Array.from({ length: 5 }).map((_, i) => (
+                                                                        <i key={i} className={`fas fa-star ${i < Math.floor(provider.rating) ? 'text-warning' : 'text-muted'}`}></i>
+                                                                    ))}
+                                                                    <span> {provider.rating} (reviews)</span>
+                                                                </div>
+                                                                <p>Specialized in {provider.specializations[0].toLowerCase()}</p>
+                                                                <button className="btn btn-primary">View Profile</button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </>
+                                )}
+                            </>
+                        )}
+
+                        {currentPage === 'login' && (
+                            <div className="container">
+                                <div className="login-container">
+                                    <div className="text-center mb-4">
+                                        <h2>Login to Your Account</h2>
+                                        <p className="text-muted">Sign in to access our services</p>
+                                    </div>
+                                    <LoginForm onLogin={handleLogin} onCancel={() => setCurrentPage('home')} />
+                                </div>
+                            </div>
+                        )}
+
+                        {currentPage === 'booking' && selectedService && (
+                            <div className="container py-5">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 className="section-title mb-0">Book Service</h2>
+                                    <button className="btn btn-outline-secondary" onClick={() => setCurrentPage('home')}>
+                                        <i className="fas fa-arrow-left me-2"></i> Back to Services
+                                    </button>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <div className="booking-form">
+                                            <h4 className="mb-4">{selectedService.service_name}</h4>
+                                            <div className="row mb-4">
+                                                <div className="col-md-6">
+                                                    <img src={selectedService.image} alt={selectedService.service_name} className="img-fluid rounded"/>
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <p>{selectedService.description}</p>
+                                                    <p><strong>Duration:</strong> {selectedService.duration}</p>
+                                                    <p><strong>Price:</strong> ₹{selectedService.price}</p>
+                                                    <p><strong>Category:</strong> {serviceCategories.find(c => c.category_id === selectedService.category_id)?.category_name}</p>
+                                                </div>
+                                            </div>
+                                            <h5 className="mb-3">Booking Details</h5>
+                                            <div className="row">
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="bookingDate" className="form-label">Date</label>
+                                                    <input 
+                                                        type="date" 
+                                                        className="form-control" 
+                                                        id="bookingDate" 
+                                                        value={bookingDetails.date}
+                                                        onChange={(e) => setBookingDetails({...bookingDetails, date: e.target.value})}
+                                                        min={new Date().toISOString().split('T')[0]}
+                                                    />
+                                                </div>
+                                                <div className="col-md-6 mb-3">
+                                                    <label htmlFor="startTime" className="form-label">Start Time</label>
+                                                    <input 
+                                                        type="time" 
+                                                        className="form-control" 
+                                                        id="startTime" 
+                                                        value={bookingDetails.startTime}
+                                                        onChange={(e) => setBookingDetails({...bookingDetails, startTime: e.target.value})}
+                                                    />
+                                                </div>
+                                                <div className="col-md-12 mb-3">
+                                                    <label htmlFor="location" className="form-label">Service Location</label>
+                                                    <textarea 
+                                                        className="form-control" 
+                                                        id="location" 
+                                                        rows="3"
+                                                        value={bookingDetails.location}
+                                                        onChange={(e) => setBookingDetails({...bookingDetails, location: e.target.value})}
+                                                        placeholder="Enter your complete address"
+                                                    ></textarea>
+                                                </div>
+                                            </div>
+                                            <button className="btn btn-primary w-100" onClick={submitBooking}>
+                                                Confirm Booking
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h5 className="card-title">Booking Summary</h5>
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>Service:</span>
+                                                    <span>{selectedService.service_name}</span>
+                                                </div>
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>Price:</span>
+                                                    <span>₹{selectedService.price}</span>
+                                                </div>
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>Duration:</span>
+                                                    <span>{selectedService.duration}</span>
+                                                </div>
+                                                <hr/>
+                                                <div className="d-flex justify-content-between mb-3">
+                                                    <strong>Total:</strong>
+                                                    <strong>₹{selectedService.price}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentPage === 'cart' && (
+                            <div className="container py-5">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 className="section-title mb-0">Your Cart</h2>
+                                    <button className="btn btn-outline-secondary" onClick={() => setCurrentPage('home')}>
+                                        <i className="fas fa-arrow-left me-2"></i> Continue Booking
+                                    </button>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h4 className="card-title">Booking Summary</h4>
+                                                {cart.length === 0 ? (
+                                                    <div className="text-center py-5">
+                                                        <i className="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                                        <h4>Your cart is empty</h4>
+                                                        <p>Add services to your cart to continue</p>
+                                                        <button className="btn btn-primary mt-3" onClick={() => setCurrentPage('home')}>
+                                                            Browse Services
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    cart.map((item, index) => (
+                                                        <div key={index} className="cart-item">
+                                                            <div className="d-flex justify-content-between">
+                                                                <div className="d-flex">
+                                                                    <img src={item.service.image} alt={item.service.service_name} width="60" height="60" style={{objectFit: 'cover', borderRadius: '8px'}}/>
+                                                                    <div className="ms-3">
+                                                                        <h6>{item.service.service_name}</h6>
+                                                                        <small>{item.service.duration}</small>
+                                                                        <br/>
+                                                                        <small>Date: {item.date} at {item.startTime}</small>
+                                                                        <br/>
+                                                                        <small>Provider: {item.provider.name}</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <span className="fw-bold">₹{item.total}</span>
+                                                                    <button className="btn btn-sm btn-outline-danger ms-2" onClick={() => setCart(cart.filter((_, i) => i !== index))}>
+                                                                        <i className="fas fa-trash"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h4 className="card-title">Order Total</h4>
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>Subtotal:</span>
+                                                    <span>₹{cartTotal}</span>
+                                                </div>
+                                                <div className="d-flex justify-content-between mb-2">
+                                                    <span>Tax (10%):</span>
+                                                    <span>₹{tax}</span>
+                                                </div>
+                                                <hr/>
+                                                <div className="d-flex justify-content-between mb-3">
+                                                    <strong>Total:</strong>
+                                                    <strong>₹{totalAmount}</strong>
+                                                </div>
+                                                <button 
+                                                    className="btn btn-primary w-100" 
+                                                    onClick={() => setCurrentPage('payment')}
+                                                    disabled={cart.length === 0}
+                                                >
+                                                    Proceed to Payment
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentPage === 'payment' && (
+                            <div className="container py-5">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 className="section-title mb-0">Complete Your Payment</h2>
+                                    <button className="btn btn-outline-secondary" onClick={() => setCurrentPage('cart')}>
+                                        <i className="fas fa-arrow-left me-2"></i> Back to Cart
+                                    </button>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <div className="card mb-4">
+                                            <div className="card-body">
+                                                <h4 className="card-title">Booking Summary</h4>
+                                                {cart.map((item, index) => (
+                                                    <div key={index} className="d-flex justify-content-between mb-2">
+                                                        <div>
+                                                            <span>{item.service.service_name}</span>
+                                                            <br/>
+                                                            <small>{item.date} at {item.startTime}</small>
+                                                        </div>
+                                                        <span>₹{item.total}</span>
+                                                    </div>
+                                                ))}
+                                                <div className="d-flex justify-content-between mt-3">
+                                                    <strong>Total Amount:</strong>
+                                                    <strong>₹{totalAmount}</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h4 className="card-title">Select Payment Method</h4>
+                                                <PaymentOptions onPayment={processPayment} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <h4 className="card-title">Why Choose Us?</h4>
+                                                <ul className="list-group list-group-flush">
+                                                    <li className="list-group-item"><i className="fas fa-check-circle text-success me-2"></i> Secure Payment</li>
+                                                    <li className="list-group-item"><i className="fas fa-check-circle text-success me-2"></i> 100% Satisfaction Guarantee</li>
+                                                    <li className="list-group-item"><i className="fas fa-check-circle text-success me-2"></i> Verified Professionals</li>
+                                                    <li className="list-group-item"><i className="fas fa-check-circle text-success me-2"></i> 24/7 Customer Support</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentPage === 'provider' && selectedProvider && (
+                            <div className="container">
+                                <div className="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 className="section-title mb-0">Provider Profile</h2>
+                                    <button className="btn btn-outline-secondary" onClick={() => setCurrentPage('home')}>
+                                        <i className="fas fa-arrow-left me-2"></i> Back to Home
+                                    </button>
+                                </div>
+                                <div className="provider-profile">
+                                    <img src={selectedProvider.profile_picture} alt={selectedProvider.name}/>
+                                    <h2>{selectedProvider.name}</h2>
+                                    <p className="text-muted">
+                                        {serviceCategories.find(c => c.category_id === selectedProvider.category_id)?.category_name}
+                                    </p>
+                                    <div className="rating mb-3">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                            <i key={i} className={`fas fa-star ${i < Math.floor(selectedProvider.rating) ? 'text-warning' : 'text-muted'}`}></i>
+                                        ))}
+                                        <span> {selectedProvider.rating} (reviews)</span>
+                                    </div>
+                                    <p className="mb-4">{selectedProvider.bio}</p>
+                                    
+                                    <h4 className="mb-3">Specializations</h4>
+                                    <div className="row mb-4">
+                                        {selectedProvider.specializations.map((spec, index) => (
+                                            <div key={index} className="col-md-6 mb-2">
+                                                <div className="bg-light p-2 rounded text-center">
+                                                    <i className="fas fa-check-circle text-success me-2"></i> {spec}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    
+                                    <h4 className="mb-3">Services Offered</h4>
+                                    <div className="row">
+                                        {services
+                                            .filter(service => service.provider_id === selectedProvider.provider_id)
+                                            .map((service, index) => (
+                                                <div key={index} className="col-md-6 mb-3">
+                                                    <div className="card">
+                                                        <div className="card-body">
+                                                            <h6 className="card-title">{service.service_name}</h6>
+                                                            <p className="card-text">{service.description}</p>
+                                                            <p className="card-text"><strong>₹{service.price}</strong> for {service.duration}</p>
+                                                            <button 
+                                                                className="btn btn-sm btn-primary" 
+                                                                onClick={() => selectService(service)}
+                                                            >
+                                                                Book Now
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                    
+                                    <div className="mt-4">
+                                        <button className="btn btn-primary me-2" onClick={() => setCurrentPage('home')}>Back to Home</button>
+                                        <button className="btn btn-outline-secondary" onClick={() => setCurrentPage('providers')}>Back to Providers</button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Footer */}
+                    <footer>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-4 mb-4">
+                                    <h5 className="mb-4">Serenity Services</h5>
+                                    <p>Providing quality home services and solutions at your doorstep.</p>
+                                    <div className="mt-3">
+                                        <a href="#" className="social-icons"><i className="fab fa-facebook"></i></a>
+                                        <a href="#" className="social-icons"><i className="fab fa-twitter"></i></a>
+                                        <a href="#" className="social-icons"><i className="fab fa-instagram"></i></a>
+                                        <a href="#" className="social-icons"><i className="fab fa-linkedin"></i></a>
+                                    </div>
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <h5>Services</h5>
+                                    <ul>
+                                        {serviceCategories.map(category => (
+                                            <li key={category.category_id}><a href="#">{category.category_name}</a></li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="col-md-4 mb-4">
+                                    <h5>Contact Us</h5>
+                                    <ul>
+                                        <li><i className="fas fa-map-marker-alt me-2"></i> 123 Service Lane, Mumbai</li>
+                                        <li><i className="fas fa-phone me-2"></i> +91 9876543210</li>
+                                        <li><i className="fas fa-envelope me-2"></i> info@serenityservices.com</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr className="mt-4 mb-4"/>
+                            <div className="text-center">
+                                <p>&copy; 2023 Serenity Services. All rights reserved.</p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Login Form Component
+        function LoginForm({ onLogin, onCancel }) {
+            const [email, setEmail] = useState('');
+            const [password, setPassword] = useState('');
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (onLogin(email, password)) {
+                    setEmail('');
+                    setPassword('');
+                } else {
+                    alert('Invalid credentials. Please try again.');
+                }
+            };
+
+            return (
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            className="form-control" 
+                            id="email" 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            className="form-control" 
+                            id="password" 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="mb-3 form-check">
+                        <input type="checkbox" className="form-check-input" id="rememberMe"/>
+                        <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" className="btn btn-primary w-100 mb-3">Login</button>
+                    <button type="button" className="btn btn-outline-secondary w-100" onClick={onCancel}>Cancel</button>
+                </form>
+            );
+        }
+
+        // Payment Options Component
+        function PaymentOptions({ onPayment }) {
+            const [selectedMethod, setSelectedMethod] = useState('');
+
+            const selectMethod = (method) => {
+                setSelectedMethod(method);
+            };
+
+            const handlePayment = () => {
+                if (!selectedMethod) {
+                    alert('Please select a payment method');
+                    return;
+                }
+                onPayment();
+            };
+
+            return (
+                <>
+                    <div className={`payment-option ${selectedMethod === 'gpay' ? 'selected' : ''}`} onClick={() => selectMethod('gpay')}>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="paymentMethod" id="gpay" checked={selectedMethod === 'gpay'} readOnly/>
+                            <label className="form-check-label" htmlFor="gpay">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Google_Pay_%28GPay%29_Logo_%282018-2020%29.svg/1200px-Google_Pay_%28GPay%29_Logo_%282018-2020%29.svg.png" height="30" alt="Google Pay" className="me-2"/>
+                                Google Pay
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div className={`payment-option ${selectedMethod === 'card' ? 'selected' : ''}`} onClick={() => selectMethod('card')}>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="paymentMethod" id="card" checked={selectedMethod === 'card'} readOnly/>
+                            <label className="form-check-label" htmlFor="card">
+                                <i className="fas fa-credit-card me-2"></i> Credit/Debit Card
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div className={`payment-option ${selectedMethod === 'upi' ? 'selected' : ''}`} onClick={() => selectMethod('upi')}>
+                        <div className="form-check">
+                            <input className="form-check-input" type="radio" name="paymentMethod" id="upi" checked={selectedMethod === 'upi'} readOnly/>
+                            <label className="form-check-label" htmlFor="upi">
+                                <i className="fas fa-mobile-alt me-2"></i> UPI
+                            </label>
+                        </div>
+                    </div>
+                    
+                    {selectedMethod === 'card' && (
+                        <div className="mt-3">
+                            <div className="row">
+                                <div className="col-md-12 mb-3">
+                                    <label htmlFor="cardNumber" className="form-label">Card Number</label>
+                                    <input type="text" className="form-control" id="cardNumber" placeholder="1234 5678 9012 3456"/>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label htmlFor="expiryDate" className="form-label">Expiry Date</label>
+                                    <input type="text" className="form-control" id="expiryDate" placeholder="MM/YY"/>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label htmlFor="cvv" className="form-label">CVV</label>
+                                    <input type="text" className="form-control" id="cvv" placeholder="123"/>
+                                </div>
+                                <div className="col-md-12 mb-3">
+                                    <label htmlFor="cardName" className="form-label">Name on Card</label>
+                                    <input type="text" className="form-control" id="cardName"/>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    
+                    {selectedMethod === 'upi' && (
+                        <div className="mt-3">
+                            <div className="mb-3">
+                                <label htmlFor="upiId" className="form-label">UPI ID</label>
+                                <input type="text" className="form-control" id="upiId" placeholder="yourname@upi"/>
+                            </div>
+                        </div>
+                    )}
+                    
+                    <button className="btn btn-primary w-100 mt-4" onClick={handlePayment}>Pay Now</button>
+                </>
+            );
+        }
+
+        // Render the App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
