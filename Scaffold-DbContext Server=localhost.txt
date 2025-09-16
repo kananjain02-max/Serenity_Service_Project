@@ -1,0 +1,49 @@
+Scaffold-DbContext "Server=localhost\SQLEXPRESS;Database=Serenity_Services;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context AppDbContext
+
+
+step 1: Create Web API project
+step 2: install sql ser ,design,tools
+step 3: in package manager console run command
+(Scaffold-DbContext "Server=localhost\SQLEXPRESS;Database=Serenity_Services;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context AppDbContext)
+
+it will connect with our database
+
+step 4: in appsetting.json add 
+
+"ConnectionStrings": {
+    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=YourDatabaseName;Trusted_Connection=True;"
+  },
+
+
+step 5: in program.cs Add
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+and also add 
+
+// CORS (for React frontend)
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
+
+and add
+
+app.UseCors();
+
+
+step 6:
+now add new controller and select api controller with EF
+
+
+now add react file 
+
+step 7: make react project and in that make your react file check port number both side 
